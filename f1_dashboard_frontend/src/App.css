@@ -1,104 +1,297 @@
-/* CSS Variables for Theme Management */
+/* Theme Variables: Dark Neon */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #111827; /* slate-900 */
+  --secondary: #1f2937; /* slate-800 */
+  --muted: #374151; /* slate-700 */
+  --text: #e5e7eb; /* gray-200 */
+  --text-dim: #9ca3af; /* gray-400 */
+  --accent: #ff1744; /* neon red */
+  --accent-glow: 0 0 20px rgba(255, 23, 68, 0.6), 0 0 40px rgba(255, 23, 68, 0.3);
+  --border: rgba(255,255,255,0.08);
+
+  --card-radius: 14px;
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+[data-theme="light"] {
+  --primary: #ffffff;
+  --secondary: #f4f6f8;
+  --muted: #e5e7eb;
+  --text: #111827;
+  --text-dim: #4b5563;
+  --accent: #ff1744;
+  --border: rgba(0,0,0,0.07);
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+/* Base */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 70% -10%, rgba(255, 23, 68, 0.15), transparent),
+              radial-gradient(1000px 500px at -10% 20%, rgba(255, 23, 68, 0.08), transparent),
+              var(--primary);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Layout */
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, var(--secondary), transparent 100%), var(--secondary);
+  border-right: 1px solid var(--border);
+  padding: 16px 12px;
+  transition: width 0.25s ease;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.sidebar.collapsed {
+  width: 76px;
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.sidebar .brand {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  gap: 12px;
+  padding: 8px 10px 22px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.brand .logo-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: var(--accent-glow);
+}
+
+.brand .title {
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  margin: 6px 0;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: var(--border);
+}
+
+.nav-link.active {
+  background: rgba(255,23,68,0.12);
+  border-color: rgba(255,23,68,0.4);
+  box-shadow: var(--accent-glow);
+}
+
+.collapse-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(0,0,0,0.12), transparent);
 }
 
 .theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.content {
+  padding: 22px;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+/* Grid and Cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 18px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent),
+              var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.card h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: var(--text-dim);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.card .value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.cols-3 { grid-column: span 3; }
+.cols-4 { grid-column: span 4; }
+.cols-6 { grid-column: span 6; }
+.cols-8 { grid-column: span 8; }
+.cols-12 { grid-column: span 12; }
+
+@media (max-width: 1200px) {
+  .app-shell {
+    grid-template-columns: 78px 1fr;
   }
-  to {
-    transform: rotate(360deg);
-  }
+  .sidebar { width: 78px; }
+  .sidebar .title { display: none; }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
   }
+  .cols-8 { grid-column: span 6; }
+  .cols-6 { grid-column: span 6; }
+  .cols-4 { grid-column: span 6; }
+  .cols-3 { grid-column: span 6; }
 }
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cols-12, .cols-8, .cols-6, .cols-4, .cols-3 { grid-column: span 2; }
+}
+
+/* List styles */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: rgba(255,23,68,0.12);
+  border: 1px solid rgba(255,23,68,0.4);
+}
+
+/* Race flag animation */
+.flag {
+  width: 36px;
+  height: 24px;
+  background: linear-gradient(135deg, #000 25%, #fff 25%, #fff 50%, #000 50%, #000 75%, #fff 75%);
+  background-size: 16px 16px;
+  animation: wave 1.4s infinite ease-in-out;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+@keyframes wave {
+  0% { transform: skewY(0) translateX(0); }
+  50% { transform: skewY(6deg) translateX(3px); }
+  100% { transform: skewY(0) translateX(0); }
+}
+
+/* Chat */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 140px);
+  gap: 12px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow: auto;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+}
+
+.input, input, textarea {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  box-shadow: var(--accent-glow);
+  transition: transform 0.1s ease, opacity 0.2s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+/* Utility */
+.muted { color: var(--text-dim); }
+.hr { height: 1px; background: var(--border); border: 0; margin: 10px 0; }
+.loading { opacity: 0.7; }
+.error { color: #ff6b6b; }
+.success { color: #4ade80; }
