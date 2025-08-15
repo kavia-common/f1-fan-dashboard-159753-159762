@@ -289,7 +289,70 @@ body {
 
 .btn:hover { transform: translateY(-1px); }
 
-/* Utility */
+/* Utility and layout enhancements */
+
+/* Ensure main content can shrink without overflowing the grid cell */
+main { 
+  min-width: 0; 
+}
+
+/* Strengthen content container against horizontal overflow */
+.content {
+  padding: 22px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent card contents from spilling visually; allow inner children to handle scrolling */
+.card { 
+  position: relative; 
+  overflow: hidden; 
+}
+
+/* Make common text elements wrap nicely instead of overflowing */
+.card .value, 
+.card .muted,
+.list-item span,
+a.card .value,
+a.card .muted {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+/* Improve list item layout to avoid text overlaps */
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Let the left span shrink and ellipsize when space is tight */
+.list-item > span:first-child {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Tables in small viewports: avoid overflow and keep columns readable */
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* enables ellipsis on cells */
+}
+
+/* Ellipsize long text in table cells */
+.card table th, 
+.card table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Keep existing utility colors and helpers */
 .muted { color: var(--text-dim); }
 .hr { height: 1px; background: var(--border); border: 0; margin: 10px 0; }
 .loading { opacity: 0.7; }
